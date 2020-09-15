@@ -42,7 +42,7 @@ class Employee:
     def validSalary(cls):
         while True:
             cls.salary = input ('Salary: ')
-            if re.match(r'^[0-9]*$',cls.salary) != None:
+            if re.match(r'^[0-9]+$',cls.salary) != None:
                 break
             else:
                 print ("Please input the number only")
@@ -50,7 +50,7 @@ class Employee:
         return cls.salary
 
     def write_out(self):
-        foutput = open(r'G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt', 'a+')
+        foutput = open(r'D:\workspace_training\Exercise\thanhpractice\data.txt', 'a+')
         foutput.write('\n%s' %self.emp_str_line)
         foutput.close()
         print ('Saved!')
@@ -58,7 +58,7 @@ class Employee:
         
     @classmethod
     def view_list_emp(cls):
-        cls.fopen = open(r'G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt')
+        cls.fopen = open(r'D:\workspace_training\Exercise\thanhpractice\data.txt')
         cls.count = 0
         print("***************LIST OF EMPLOYEES***************")
         for line in cls.fopen:
@@ -84,7 +84,7 @@ class Employee:
     @classmethod
     def edit(cls):
         cls.view_list_emp()
-        cls.fopen_to_edit = open(r'G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt')
+        cls.fopen_to_edit = open(r'D:\workspace_training\Exercise\thanhpractice\data.txt')
         for line in cls.fopen_to_edit:
             line = line.rstrip()
             cls.line_split = line.split('    ')
@@ -92,7 +92,7 @@ class Employee:
         cls.fopen_to_edit.close()
         while True:
             choose_line = int(input ("Which line you want to edit?: "))
-            if choose_line in range(len(cls.list_info)+1):
+            if choose_line in range(1,len(cls.list_info)+1):
                 for i in range(len(cls.list_info)):
                     if choose_line == i+1:
                         line_edit = cls.list_info[i]
@@ -122,7 +122,7 @@ class Employee:
                 print ("Please try again!")
                 continue
        
-        cls.fopen_to_save = open (r'G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt','w')
+        cls.fopen_to_save = open (r'D:\workspace_training\Exercise\thanhpractice\data.txt','w')
         for i in cls.list_info:
             cls.part = '    '.join([str(elem) for elem in i])
             if i == cls.list_info[-1]:
@@ -133,11 +133,10 @@ class Employee:
         cls.fopen_to_save.close()
         print ('{} has edited successfully'.format(change_field))
         return
-
     @classmethod
     def remove(cls):
         cls.view_list_emp()
-        with open (r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "r") as file:
+        with open (r"D:\workspace_training\Exercise\thanhpractice\data.txt", "r") as file:
             lines = file.readlines()
         while True:
             choose_line = int(input("Which line do you want to remove?: "))
@@ -149,11 +148,119 @@ class Employee:
             else:
                 print ("Please choose line from 1 to %i." %(len(lines)))
                 continue
-        with open(r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "w") as file:
+        with open(r"D:\workspace_training\Exercise\thanhpractice\data.txt", "w") as file:
             for line in lines:
                 if line != lines[(right_choose_line-1)]:
                     file.write(line)
+    @classmethod
+    def search(cls):
+        cls.view_list_emp()
+        cls.count = 0
+        with open (r'D:\workspace_training\Exercise\thanhpractice\data.txt') as file:
+            lines = file.readlines()
+        while True:            
+            while True:
+                choose_key = input ("Which 'key' do you want to search by?: ")
+                if choose_key in ['name', 'gender', 'DoB', 'salary']:
+                    break
+                else:
+                    print ("Please enter the key to search 'name', 'gender', 'DoB', 'salary'")                   
+            if choose_key == 'gender':
+                while True: 
+                    choose_gender = input ("Which gender do you want to search (Male/Female)?: ")
+                    if choose_gender == 'Male' or choose_gender == 'Female':
+                        break
+                    else:
+                        print ("Please enter correct gender 'Male' / 'Female'")
+                print ("######### RESULT! ##########")
+                for line in lines:
+                    if choose_gender in line:
+                        cls.count += 1
+                        print ('{}. {}'.format(cls.count,line.rstrip('\n')))
+                else:
+                    break
 
+            elif choose_key == 'name':
+                while True:
+                    choose_name = input ("What name do you want to search?: ")
+                    if re.match(r'^[a-zA-Z\s]+$',choose_name) !=None:
+                        break
+                    else:
+                        print ("Please enter a text only")                        
+                print ("######### RESULT! ##########")
+                for line in lines:
+                    if re.search(r'Male', line) != None:
+                        xxx = 'Male'
+                        endpoint = line.find(xxx)
+                    else:
+                        xxx = 'Female'
+                        endpoint = line.find(xxx)
+                    name_check = line[0:(endpoint-4)]
+                    if choose_name in name_check:
+                        cls.count +=1
+                        print ('{}. {}'.format(cls.count,line))
+                else:
+                    print ("Not Found!")
+                    break
 
+            elif choose_key == 'DoB':
+                while True:
+                    choose_dob = input ("What DoB do you want to search?: ")
+                    if re.match(r'\d\d|\d\d\/\d\d\|\d\d\/\d\d\/(19[6-9][0-9]|200[0-2])*$',choose_dob) != None:
+                        break
+                    else:
+                        print ("Please enter a correct DoB")
+                print ("######### RESULT! ##########")
+                for line in lines:                    
+                    if line != line [-1]:
+                        line = line.rstrip('\n')
+                    begin_point_num = line.find('/')
+                    end_point_num = line.rfind('/')
+                    check_DoB = line[(begin_point_num-2) : (end_point_num+5)]
+                    if choose_dob in check_DoB:
+                        cls.count +=1
+                        print ('{}. {}'.format(cls.count,line))
+                else:
+                    print ("Not found")
+                    break
+
+            elif choose_key == 'salary':
+                while True:
+                    type_search = input ("What kind of type's searching greater/less than? ")
+                    if type_search == 'greater' or type_search == 'less':
+                        break
+                    else:
+                        print ("Please enter the correct kind of type'searching!") 
+                while True:
+                    try:
+                        value = int(input ("Enter the value {} than: ".format(type_search)))
+                    except ValueError:
+                        print ("Please enter a correct value - integer: ")
+                    else:
+                        break
+                print ("######### RESULT! ##########")
+                with open (r'D:\workspace_training\Exercise\thanhpractice\data.txt') as file:
+                    lines = file.readlines()
+                    for line in lines:
+                        if line != lines[-1]:
+                            line = line.rstrip('\n')
+                        begin_point_num = line.rfind(' ')
+                        split_salary = line[(begin_point_num+1):len(line)]
+                        if type_search == 'greater':
+                            if int(split_salary) >= value:
+                                cls.count +=1
+                                print ('{}. {}'.format(cls.count,line))
+                        elif type_search == 'less':
+                            if int(split_salary) <= value:
+                                cls.count +=1
+                                print ('{}. {}'.format(cls.count,line))
+                    else:
+                        print ("Not Found")
+                        break
+            else:
+                continue
+        with open (r'D:\workspace_training\Exercise\thanhpractice\data.txt','w') as file: #recover root list
+            for line in lines:
+                file.write(line)
         
             
