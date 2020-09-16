@@ -17,13 +17,15 @@ class Employee:
         return cls(name, gender, DoB, salary)
 
 list_info = []
-fopen_to_edit = open(r'G:\KENSHIN\2020\TMA Solution\workspace2\git_home\data.txt')
+fopen_to_edit = open(r'C:\Users\KENSHINPC\Desktop\practice\practice\data.txt')
 for line in fopen_to_edit:
     line = line.rstrip()
     line_split = line.split('    ')
     list_info.append(line_split)
 fopen_to_edit.close()
 print (list_info)
-for attr in list_info:
-    new_emp = Employee.from_string(attr)
-    print (new_emp)
+for i in range(len(list_info)):
+    emp = Employee.from_string(list_info[i])
+print (Employee.count)
+    
+
