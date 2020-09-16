@@ -26,4 +26,5 @@ fopen_to_edit.close()
 print (list_info)
 for attr in list_info:
     new_emp = Employee.from_string(attr)
-    print (new_emp)
+
+print (new_emp.name)
