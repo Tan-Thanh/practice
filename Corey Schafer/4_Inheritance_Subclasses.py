@@ -73,8 +73,10 @@ mgr_1 = Manager('Francesco', 'Totti', 90000, [dev_1, dev_2]) #mgr_1 supervise de
 # print (dev_1.pay)
 # print (dev_1.pro_lang)
 # print (dev_2.pro_lang)
-############################
-print(isinstance(mgr_1, Employee))        #kiểm tra sự kế thừa của object và subclass
-print(isinstance(mgr_1, Manager))        
-print(issubclass(Developer, Employee))
-print(issubclass(Manager, Employee))
+# ############################
+# print(isinstance(mgr_1, Employee))        #kiểm tra sự kế thừa của object và subclass
+# print(isinstance(mgr_1, Manager))        
+# print(issubclass(Developer, Employee))
+# print(issubclass(Manager, Employee))
+####################################
+

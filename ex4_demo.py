@@ -185,25 +185,25 @@
 # print (new_emp.name)
 # # print (type(abc_split))
 #############   REMOVE FUNCTION ###################
-with open(r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "r") as f:
-    lines = f.readlines()
-    # print (lines)
-while True:
-    a = int(input("line?"))
-    if a in range(len(lines)+1):
-        b = a
-        if b == lines.
-        break
-    else:
-        print ('Try again')
-        continue
+# with open(r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "r") as f:
+#     lines = f.readlines()
+#     # print (lines)
+# while True:
+#     a = int(input("line?"))
+#     if a in range(len(lines)+1):
+#         b = a
+#         if b == lines.
+#         break
+#     else:
+#         print ('Try again')
+#         continue
 
-with open(r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "w") as f:
-    for line in lines:
-        if line != lines[(b-1)]:
-            if line != lines[-1]:
-                f.write(line)
-            else:
-                lines[-2].rtrip('\n')
-                f.write(line)
+# with open(r"G:\KENSHIN\2020\TMA Solution\workspace2\ex4\data.txt", "w") as f:
+#     for line in lines:
+#         if line != lines[(b-1)]:
+#             if line != lines[-1]:
+#                 f.write(line)
+#             else:
+#                 lines[-2].rtrip('\n')
+#                 f.write(line)
 ################## SEARCH FUNCTION ###########################
