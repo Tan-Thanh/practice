@@ -43,10 +43,10 @@ class Employee:
 #ví dụ phải parse 1 string rồi mới khai báo object -> dùng class method hiệu quả hơn
 #vì data ko phải lúc nào cũng hand typing mà là import từ nhiều sources
 
-emp_str_1 = 'Thanh-Nguyen-12345678'
-emp_str_2 = "Thu-Le-87654321"
-new_emp_1 = Employee.from_string(emp_str_1)
-print (Employee.num_of_emps)
+# emp_str_1 = 'Thanh-Nguyen-12345678'
+# emp_str_2 = "Thu-Le-87654321"
+# new_emp_1 = Employee.from_string(emp_str_1)
+
 # first, last, pay = emp_str_1.split('-')    #khai báo biến từ list (assign multiple variables)
 # new_emp_1 = Employee(first,last, pay)      #nếu phải parse từng str cực -> classmethod
 # print (new_emp_1)
@@ -55,9 +55,9 @@ print (Employee.num_of_emps)
 ###################################
 #Ví dụ viết 1 static method về kiểm tra ngày workday
 #-> nó là static vì nó ko liên quan gì instance cụ thể nào hoặc class variable nào
-# import datetime
-# my_date = datetime.date(2020, 9, 15)
-# print (Employee.is_workday(my_date))
+import datetime
+my_date = datetime.date(2020, 9, 15)
+print (Employee.is_workday(my_date))
 ########################
 # emp1 = Employee('Thanh', 'Nguyen', 12345678)
 # emp2 = Employee('Thu', 'Le', 87654321)
