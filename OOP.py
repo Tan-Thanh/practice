@@ -24,8 +24,15 @@ for line in fopen_to_edit:
     list_info.append(line_split)
 fopen_to_edit.close()
 print (list_info)
+<<<<<<< HEAD
 for i in range(len(list_info)):
     emp = Employee.from_string(list_info[i])
 print (Employee.count)
     
 
+=======
+for attr in list_info:
+    new_emp = Employee.from_string(attr)
+
+print (new_emp.name)
+>>>>>>> 5771ef5187938f6bb30247c445a19674ae216c56

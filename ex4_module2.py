@@ -17,7 +17,8 @@ class Employee:
                 break
             else:
                 print ("Please enter word character: ")
-        return cls.name 
+        return cls.name
+
     @classmethod
     def validGender(cls):
         while True:
@@ -29,10 +30,10 @@ class Employee:
                 else:
                     cls.gender = 'Female'
                     break
-           
             else:
                 print ("Please enter [m-Male] or [f-Female]")
         return cls.gender
+
     @classmethod
     def validDoB(cls):
         while True:
@@ -47,6 +48,7 @@ class Employee:
                 print ("Please try again *dd/mm/yyyy* ")
                 continue
         return cls.DoB
+
     @classmethod
     def validSalary(cls):
         while True:
@@ -64,6 +66,7 @@ class Employee:
         foutput.close()
         print ('Employee was added successfully!')
         return self
+
     @classmethod
     def from_list(cls, emp_list_format):
         name, gender, DoB, salary = emp_list_format
@@ -71,103 +74,114 @@ class Employee:
 
     @staticmethod
     def view_list_emp():
-        fopen = open(r'data.txt')
         count = 0
+        fopen = open(r'data.txt')
         print("*************** EMPLOYEES LIST ***************")
         print ("No.    Name    Gender    Date of birth    Salary")
         for line in fopen:
             count += 1
             line = line.rstrip()
             print ('{}. {}'.format(count,line))
-            line_split = line.split('    ')
-            Employee.list_info.append(line_split)
+            if line not in Employee.list_info:
+                Employee.list_info.append(line)
+            
+
         fopen.close()
         print ("Number of Employees current: ", count)
+        print (Employee.list_info)
         return 
 
     @classmethod
     def add(cls):
-        for emp in Employee.list_info:
-            add_emp = Employee.from_list(emp)
-        name = cls.validName()
-        gender = cls.validGender()
-        DoB = cls.validDoB()
-        salary = cls.validSalary()
-        emp = cls(name, gender, DoB, salary)
-        
+        with open ('data.txt', 'w') as f:
+            for emp in Employee.list_info:
+                emp_split = emp.split('   ')
+                add_emp = Employee.from_list(emp_split)
+            add_list = Employee.list_info()
+            name = cls.validName()
+            gender = cls.validGender()
+            DoB = cls.validDoB()
+            salary = cls.validSalary()
+            emp = Employee(name, gender, DoB, salary)
+            if emp not in add_list:
+                add_list.append(emp)
+            for line in add_list:
+                f.write(line)
         return cls(name, gender, DoB, salary)
-    @classmethod
-    def edit(cls):
-        cls.view_list_emp()
-        list_to_edit = []
-        fopen_to_edit = open(r'data.txt')
-        for line in fopen_to_edit:
-            line = line.rstrip()
-            line_split = line.split('    ')
-            list_to_edit.append(line_split)
-        fopen_to_edit.close()
-        while True:
-            choose_line = int(input ("Which line you want to edit?: "))
-            if choose_line in range(1,len(list_to_edit)+1):
-                for i in range(len(list_to_edit)):
-                    if choose_line == i+1:
-                        line_edit = list_to_edit[i]
-                        while True:
-                            change_field = input ("choose the field you want to edit: ")
-                            if change_field == 'name':
-                                new_name = Employee.validName()
-                                line_edit[0] = new_name
-                                break
-                            elif change_field == 'gender':
-                                new_gender = Employee.validGender()
-                                line_edit[1] = new_gender
-                                break
-                            elif change_field == 'DoB':
-                                new_DoB = Employee.validDoB()
-                                line_edit[2] = new_DoB
-                                break
-                            elif change_field == 'salary':
-                                new_salary = Employee.validSalary()
-                                line_edit[3] = new_salary
-                                break
-                            else:
-                                continue
-                            list_to_edit[i] = line_edit
-                break
-            else:
-                print ("Please try again!")
-                continue
+    # @classmethod
+    # def edit(cls):
+    #     cls.view_list_emp()
+    #     list_to_edit = []
+    #     fopen_to_edit = open(r'data.txt')
+    #     for line in fopen_to_edit:
+    #         line = line.rstrip()
+    #         line_split = line.split('    ')
+    #         list_to_edit.append(line_split)
+    #     fopen_to_edit.close()
+    #     while True:
+    #         choose_line = int(input ("Which line you want to edit?: "))
+    #         if choose_line in range(1,len(list_to_edit)+1):
+    #             for i in range(len(list_to_edit)):
+    #                 if choose_line == i+1:
+    #                     line_edit = list_to_edit[i]
+    #                     while True:
+    #                         change_field = input ("choose the field you want to edit: ")
+    #                         if change_field == 'name':
+    #                             new_name = Employee.validName()
+    #                             line_edit[0] = new_name
+    #                             break
+    #                         elif change_field == 'gender':
+    #                             new_gender = Employee.validGender()
+    #                             line_edit[1] = new_gender
+    #                             break
+    #                         elif change_field == 'DoB':
+    #                             new_DoB = Employee.validDoB()
+    #                             line_edit[2] = new_DoB
+    #                             break
+    #                         elif change_field == 'salary':
+    #                             new_salary = Employee.validSalary()
+    #                             line_edit[3] = new_salary
+    #                             break
+    #                         else:
+    #                             continue
+    #                         list_to_edit[i] = line_edit
+    #             break
+    #         else:
+    #             print ("Please try again!")
+    #             continue
        
-        fopen_to_save = open (r'data.txt','w')
-        for i in list_to_edit:
-            part = '    '.join([str(elem) for elem in i])
-            if i == list_to_edit[-1]:
-                emp_str_form = ('{}'.format(part))
-            else:
-                emp_str_form = ('{}\n'.format(part))
-            fopen_to_save.write(emp_str_form)
-        fopen_to_save.close()
-        print ('{} has edited successfully'.format(change_field))
-        return
-    @classmethod
-    def remove(cls):
-        Employee.view_list_emp()
-        with open (r"data.txt", "r") as file:
-            lines = file.readlines()
-        while True:
-            choose_line = int(input("Which line do you want to remove?: "))
-            if choose_line in range(1,len(lines)+1):
-                right_choose_line = choose_line
-                if right_choose_line == (lines.index(lines[-1])+1):
-                    lines[-2]=lines[-2].strip('\n')
-                break 
-            else:
-                print ("Please choose line from 1 to %i." %(len(lines)))
-                continue
-        with open(r"data.txt", "w") as file:
-            for line in lines:  
-                if line != lines[(right_choose_line-1)]:
-                    file.write(line)
+    #     fopen_to_save = open (r'data.txt','w')
+    #     for i in list_to_edit:
+    #         part = '    '.join([str(elem) for elem in i])
+    #         if i == list_to_edit[-1]:
+    #             emp_str_form = ('{}'.format(part))
+    #         else:
+    #             emp_str_form = ('{}\n'.format(part))
+    #         fopen_to_save.write(emp_str_form)
+    #     fopen_to_save.close()
+    #     print ('{} has edited successfully'.format(change_field))
+    #     return
+        
+    # @classmethod
+    # def remove(cls):
+    #     Employee.view_list_emp()
+    #     with open (r"data.txt", "r") as file:
+    #         lines = file.readlines()
+    #     while True:
+    #         choose_line = int(input("Which line do you want to remove?: "))
+    #         if choose_line in range(len(lines)+1):
+    #             right_choose_line = choose_line
+    #             if right_choose_line == (lines.index(lines[-1])+1):
+    #                 lines[-2]=lines[-2].strip('\n')
+    #             break
+    #         else:
+    #             print ("Please choose line from 1 to %i." %(len(lines)))
+    #             continue
+    #     with open(r"data.txt", "w") as file:
+    #         for line in lines:
+    #             if line != lines[(right_choose_line-1)]:
+    #                 file.write(line)
+
     @classmethod
     def search(cls):
         cls.view_list_emp()
@@ -283,5 +297,8 @@ class Employee:
                     break
             else:
                 continue
-
+        # with open (r'data.txt','w') as file: #recover root list
+        #     for line in lines:
+        #         file.write(line)
+        
             
