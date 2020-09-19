@@ -31,11 +31,11 @@ class Employee:
         return True
 
 
-class Developer(Employee):  # tạo subcless kế thừa parent Employee
+class Developer(Employee):  # tạo subclass kế thừa parent Employee
     raise_amt = 1.10  # viết pass để show là subclass này có thể inheritance parent class các method
     # python xem qua subclass có __init__ gì ko? nếu ko nó sẽ lấy từ parent
     def __init__(self, first, last, pay, pro_lang):
-        super().__init__(first, last, pay)  # ưu tiên dùng hơn khi có nhiều inheritance
+        super().__init__(first, last, pay)  # ưu tiên dùng hơn khi có nhiều class phải inheritance
         # Employee.__init__(self, first, last, pay)  #có 2 cách để khai báo thêm attribute cho subclass
         self.pro_lang = pro_lang
 

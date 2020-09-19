@@ -43,5 +43,5 @@ print(emp_1.first)
 print (emp_1.email)        #đã access lại như 1 attribute            
 print (emp_1.fullname)
 
-del emp_1.fullname
+# del emp_1.fullname
 print (emp_1.email)
